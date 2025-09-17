@@ -1,34 +1,47 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import OrderItem from './OrderItem';
-import { Pagination } from './Pagination';
+import Pagination from './Pagination';
 import '../css/styles.css';
 
-export const OrderList = ({ pedidos }) => {
-    const [pedidosPerPage] = useState(4);
+function OrderList({ orders }) {
+    const [ordersPerPage] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const indexOfLastPedido = currentPage * pedidosPerPage;
-    const indexOfFirstPedido = indexOfLastPedido - pedidosPerPage;
-    const currentPedidos = pedidos.slice(indexOfFirstPedido, indexOfLastPedido);
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
 
     return (
         <>
             <div className="pedidos-list">
-                {currentPedidos.length === 0 ? (
+                {currentOrders.length === 0 ? (
                     <p>No hay pedidos para mostrar.</p>
                 ) : (
-                    currentPedidos.map((pedido) => (
-                        <OrderItem key={pedido.id} pedido={pedido} />
+                    currentOrders.map((order) => (
+                        <ItemCard key={order.id} {...order} />
                     ))
                 )}
             </div>
 
             <Pagination
-                pedidosPerPage={pedidosPerPage}
+                pedidosPerPage={ordersPerPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                totalPedidos={pedidos.length}
+                totalPedidos={orders.length}
             />
         </>
     );
+}
+
+OrderList.propTypes = {
+  orders: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    customer: PropTypes.string.isRequired,
+    items: PropTypes.array.isRequired,
+    status: PropTypes.oneOf(['pending', 'shipped', 'delivered']),
+    date: PropTypes.instanceOf(Date),
+  })).isRequired,
 };
+
+export default OrderList;
