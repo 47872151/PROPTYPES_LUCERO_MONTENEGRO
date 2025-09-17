@@ -3,9 +3,20 @@ import rawPedidos from '../data/pedidos';
 
 const PedidosContext = createContext();
 
-export function PedidosProvider({ children }) {
-  // Mapeo de datos al formato esperado
-  const pedidosData = rawPedidos.map(p => ({
+function getInitialPedidos() {
+  const local = localStorage.getItem('pedidos');
+  if (local) {
+    try {
+      const arr = JSON.parse(local);
+      return arr.map(p => ({
+        ...p,
+        date: new Date(p.date),
+      }));
+    } catch {
+      // Si hay error, usar los datos iniciales
+    }
+  }
+  return rawPedidos.map(p => ({
     id: p.id,
     customer: p.cliente,
     items: p.listaProductos.map(item => ({
@@ -14,13 +25,20 @@ export function PedidosProvider({ children }) {
       quantity: item.cantidad,
       price: item.precio,
     })),
-    status: p.estado, // "pending", "shipped", "delivered"
+    status: p.estado,
     date: new Date(p.fecha),
   }));
-  const [pedidos, setPedidos] = useState(pedidosData);
+}
+
+export function PedidosProvider({ children }) {
+  const [pedidos, setPedidos] = useState(getInitialPedidos());
 
   const addPedido = (nuevoPedido) => {
-    setPedidos(prev => [...prev, nuevoPedido]);
+    setPedidos(prev => {
+      const updated = [...prev, nuevoPedido];
+      localStorage.setItem('pedidos', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (

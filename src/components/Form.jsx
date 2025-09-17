@@ -2,11 +2,12 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import productos from '../data/productos';
+import { usePedidos } from '../context/PedidosContext';
 
 function Form({ onAddPedido }) {
 	const [customer, setCustomer] = useState('');
 	const [items, setItems] = useState([]);
-	const [status, setStatus] = useState('pending');
+	// Estado siempre 'pending', no editable
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState(false);
 
@@ -32,6 +33,7 @@ function Form({ onAddPedido }) {
 		setError('');
 	};
 
+	const { pedidos } = usePedidos();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (customer.length < 3) {
@@ -42,17 +44,18 @@ function Form({ onAddPedido }) {
 			setError('Debe agregar al menos un producto');
 			return;
 		}
+		// Calcular el id siguiente
+		const lastId = pedidos.length > 0 ? Math.max(...pedidos.map(p => p.id)) : 0;
 		const nuevoPedido = {
-			id: Date.now(),
+			id: lastId + 1,
 			customer,
 			items,
-			status,
+			status: 'pending',
 			date: new Date(),
 		};
 		onAddPedido(nuevoPedido);
 		setCustomer('');
 		setItems([]);
-		setStatus('pending');
 		setError('');
 		setSuccess(true);
 		setTimeout(() => setSuccess(false), 5000);
@@ -106,11 +109,7 @@ function Form({ onAddPedido }) {
 							</li>
 						))}
 					</ul>
-					<select value={status} onChange={e => setStatus(e.target.value)}>
-						<option value="pending">Pendiente</option>
-						<option value="shipped">Enviado</option>
-						<option value="delivered">Entregado</option>
-					</select>
+					{/* Estado oculto, siempre 'pending' */}
 					<button type="submit">Agregar Pedido</button>
 				</form>
 			);
