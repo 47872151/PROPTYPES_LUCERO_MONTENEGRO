@@ -12,7 +12,7 @@ function OrderFilter({ filter, onChange }) {
 }
 
 OrderFilter.propTypes = {
-  filter: PropTypes.oneOf(['pending', 'shipped', 'delivered']).isRequired,
+  filter: PropTypes.oneOf(['pending', 'shipped', 'delivered', '']),
   onChange: PropTypes.func.isRequired,
 };
 

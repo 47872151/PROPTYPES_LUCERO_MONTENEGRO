@@ -1,12 +1,12 @@
 import React from "react";
 import '../css/styles.css';
 
-export const Pagination = ({
+export default function Pagination({
   pedidosPerPage,
   totalPedidos,
   currentPage,
   setCurrentPage,
-}) => {
+}) {
   const totalPages = Math.ceil(totalPedidos / pedidosPerPage);
 
   const handlePageClick = (pageNumber) => {

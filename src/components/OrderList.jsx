@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import OrderItem from './OrderItem';
+import ItemCard from './ItemCard';
 import Pagination from './Pagination';
 import '../css/styles.css';
 
