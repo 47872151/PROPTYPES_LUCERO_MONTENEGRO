@@ -14,7 +14,7 @@ function OrderList({ orders }) {
 
     return (
         <>
-            <div className="pedidos-list">
+            <div className="productos-populares">
                 {currentOrders.length === 0 ? (
                     <p>No hay pedidos para mostrar.</p>
                 ) : (

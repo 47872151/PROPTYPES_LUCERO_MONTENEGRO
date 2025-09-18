@@ -3,11 +3,11 @@ import '../css/styles.css';
 
 function OrderItem({ id, customer, items, status, date }) {
   return (
-    <div className="order-item">
-      <h4>Pedido #{id}</h4>
-      <p>Cliente: {customer}</p>
-      <p>Fecha: {date instanceof Date ? date.toLocaleDateString() : new Date(date).toLocaleDateString()}</p>
-      <p>Estado: {status}</p>
+    <div className="card-consulta">
+      <h4 className="card-titulo">Pedido #{id}</h4>
+      <p><span>Cliente:</span> {customer}</p>
+      <p><span>Fecha:</span> {date instanceof Date ? date.toLocaleDateString() : new Date(date).toLocaleDateString()}</p>
+      <p><span>Estado:</span> {status}</p>
       <ul>
         {items.map(item => (
           <li key={item.productId}>

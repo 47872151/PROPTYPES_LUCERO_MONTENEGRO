@@ -62,56 +62,61 @@ function Form({ onAddPedido }) {
 	};
 
 			return (
-				<form onSubmit={handleSubmit}>
-					<h3>Nuevo Pedido</h3>
-					{error && <p style={{color:'red'}}>{error}</p>}
-					{success && <p style={{color:'green'}}>¡Pedido creado exitosamente!</p>}
-					<input
-						type="text"
-						placeholder="Cliente"
-						value={customer}
-						onChange={e => setCustomer(e.target.value)}
-					/>
-					<div>
-						<select value={selectedProductId} onChange={e => setSelectedProductId(e.target.value)}>
-							{productos.map(producto => (
-								<option key={producto.idProducto} value={producto.idProducto}>
-									{producto.nombre}
-								</option>
-							))}
-						</select>
+				<div className="align-center">
+					<form className="form" onSubmit={handleSubmit}>
+						<h3>Nuevo Pedido</h3>
+						{error && <p className="mensaje-error">{error}</p>}
+						{success && <p id="mensajeConfirmacion">¡Pedido creado exitosamente!</p>}
+						<label>Cliente</label>
 						<input
-							type="number"
-							min="1"
-							placeholder="Cantidad"
-							value={productQty}
-							onChange={e => setProductQty(Number(e.target.value))}
+							type="text"
+							placeholder="Cliente"
+							value={customer}
+							onChange={e => setCustomer(e.target.value)}
 						/>
-						{/* Mostrar datos del producto seleccionado */}
-						{(() => {
-							const producto = productos.find(p => p.idProducto === Number(selectedProductId));
-							if (!producto) return null;
-							return (
-								<div style={{marginTop: '8px', marginBottom: '8px'}}>
-									<p><strong>Descripción:</strong> {producto.descripcion}</p>
-									<p><strong>Precio:</strong> ${producto.precio}</p>
-									<p><strong>Categoría:</strong> {producto.categoria}</p>
-								</div>
-							);
-						})()}
-						<button type="button" onClick={handleAddItem}>Agregar producto</button>
-					</div>
-					<ul>
-						{items.map(item => (
-							<li key={item.productId}>
-								{item.name} - Cantidad: {item.quantity} - Precio: ${item.price}
-								<br /><small>{item.descripcion}</small>
-							</li>
-						))}
-					</ul>
-					{/* Estado oculto, siempre 'pending' */}
-					<button type="submit">Agregar Pedido</button>
-				</form>
+						<div>
+							<label>Producto</label>
+							<select value={selectedProductId} onChange={e => setSelectedProductId(e.target.value)}>
+								{productos.map(producto => (
+									<option key={producto.idProducto} value={producto.idProducto}>
+										{producto.nombre}
+									</option>
+								))}
+							</select>
+							<label>Cantidad</label>
+							<input
+								type="number"
+								min="1"
+								placeholder="Cantidad"
+								value={productQty}
+								onChange={e => setProductQty(Number(e.target.value))}
+							/>
+							{/* Mostrar datos del producto seleccionado */}
+							{(() => {
+								const producto = productos.find(p => p.idProducto === Number(selectedProductId));
+								if (!producto) return null;
+								return (
+									<div className="card-consulta">
+										<p><span>Descripción:</span> {producto.descripcion}</p>
+										<p><span>Precio:</span> ${producto.precio}</p>
+										<p><span>Categoría:</span> {producto.categoria}</p>
+									</div>
+								);
+							})()}
+							<button type="button" className="button-primary" onClick={handleAddItem}>Agregar producto</button>
+						</div>
+						<ul>
+							{items.map(item => (
+								<li key={item.productId}>
+									{item.name} - Cantidad: {item.quantity} - Precio: ${item.price}
+									<br /><small>{item.descripcion}</small>
+								</li>
+							))}
+						</ul>
+						{/* Estado oculto, siempre 'pending' */}
+						<button type="submit" className="button-primary">Agregar Pedido</button>
+					</form>
+				</div>
 			);
 }
 

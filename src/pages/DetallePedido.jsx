@@ -26,8 +26,8 @@ function DetallePedido() {
 	};
 
 	return (
-		<div>
-			<h2>Detalle del Pedido</h2>
+		<div className="container">
+			<h2 className="titulo-seccion">Detalle del Pedido</h2>
 			<OrderItem {...pedido} />
 		</div>
 	);

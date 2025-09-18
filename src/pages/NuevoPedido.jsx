@@ -4,8 +4,8 @@ import { usePedidos } from '../context/PedidosContext';
 function NuevoPedido() {
 	const { addPedido } = usePedidos();
 	return (
-		<div>
-			<h2>Nuevo Pedido</h2>
+		<div className="container">
+			<h2 className="titulo-seccion">Nuevo Pedido</h2>
 			<Form onAddPedido={addPedido} />
 		</div>
 	);

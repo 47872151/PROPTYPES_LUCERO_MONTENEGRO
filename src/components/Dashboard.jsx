@@ -20,11 +20,11 @@ function Dashboard() {
   const delivered = pedidos.filter(p => p.status === 'delivered').length;
 
   return (
-    <div>
-      <h2>Gestión de Pedidos</h2>
+    <div className="container">
+      <h2 className="titulo-seccion">Gestión de Pedidos</h2>
       <OrderFilter filter={filter} onChange={setFilter} />
       <OrderList orders={filteredOrders} />
-      <h2>Estadísticas</h2>
+      <h2 className="titulo-seccion">Estadísticas</h2>
       <OrderStats total={total} pending={pending} shipped={shipped} delivered={delivered} />
     </div>
   );

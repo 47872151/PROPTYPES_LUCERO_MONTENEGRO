@@ -4,7 +4,7 @@ import '../css/styles.css';
 
 export default function Home() {
   return (
-    <div>
+    <div className="home-container">
       <Dashboard />
     </div>
   );
