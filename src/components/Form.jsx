@@ -62,60 +62,86 @@ function Form({ onAddPedido }) {
 	};
 
 			return (
-				<div className="align-center">
-					<form className="form" onSubmit={handleSubmit}>
-						<h3>Nuevo Pedido</h3>
+				<div className="nuevo-pedido-container">
+					<div className="form-container">
 						{error && <p className="mensaje-error">{error}</p>}
 						{success && <p id="mensajeConfirmacion">¡Pedido creado exitosamente!</p>}
-						<label>Cliente</label>
-						<input
-							type="text"
-							placeholder="Cliente"
-							value={customer}
-							onChange={e => setCustomer(e.target.value)}
-						/>
-						<div>
-							<label>Producto</label>
-							<select value={selectedProductId} onChange={e => setSelectedProductId(e.target.value)}>
-								{productos.map(producto => (
-									<option key={producto.idProducto} value={producto.idProducto}>
-										{producto.nombre}
-									</option>
-								))}
-							</select>
-							<label>Cantidad</label>
+
+						<form onSubmit={handleSubmit}>
+							<label>Cliente</label>
 							<input
-								type="number"
-								min="1"
-								placeholder="Cantidad"
-								value={productQty}
-								onChange={e => setProductQty(Number(e.target.value))}
+								type="text"
+								placeholder="Nombre del cliente"
+								value={customer}
+								onChange={e => setCustomer(e.target.value)}
 							/>
-							{/* Mostrar datos del producto seleccionado */}
-							{(() => {
-								const producto = productos.find(p => p.idProducto === Number(selectedProductId));
-								if (!producto) return null;
-								return (
-									<div className="card-consulta">
-										<p><span>Descripción:</span> {producto.descripcion}</p>
-										<p><span>Precio:</span> ${producto.precio}</p>
-										<p><span>Categoría:</span> {producto.categoria}</p>
+
+							{/* Mostrar información del cliente */}
+							{customer && (
+								<div className="customer-preview">
+									<p><span>Cliente:</span> {customer}</p>
+								</div>
+							)}
+
+							<div className="product-selection">
+								<label>Producto</label>
+								<select value={selectedProductId} onChange={e => setSelectedProductId(e.target.value)}>
+									{productos.map(producto => (
+										<option key={producto.idProducto} value={producto.idProducto}>
+											{producto.nombre}
+										</option>
+									))}
+								</select>
+
+								<label>Cantidad</label>
+								<input
+									type="number"
+									min="1"
+									placeholder="Cantidad"
+									value={productQty}
+									onChange={e => setProductQty(Number(e.target.value))}
+								/>
+
+								{/* Mostrar datos del producto seleccionado */}
+								{(() => {
+									const producto = productos.find(p => p.idProducto === Number(selectedProductId));
+									if (!producto) return null;
+									return (
+										<div className="product-preview">
+											<p><span>Descripción:</span> {producto.descripcion}</p>
+											<p><span>Precio:</span> ${producto.precio}</p>
+											<p><span>Categoría:</span> {producto.categoria}</p>
+										</div>
+									);
+								})()}
+
+								<button type="button" className="btn-add-product" onClick={handleAddItem}>
+									Agregar producto
+								</button>
+							</div>
+
+							<div className="items-list">
+								{items.length === 0 ? (
+									<div className="items-empty">
+										No hay productos agregados. Selecciona un producto y cantidad para comenzar.
 									</div>
-								);
-							})()}
-							<button type="button" className="button-primary" onClick={handleAddItem}>Agregar producto</button>
-						</div>
-						<ul>
-							{items.map(item => (
-								<li key={item.productId}>
-									{item.name} - Cantidad: {item.quantity} - Precio: ${item.price}
-									<br /><small>{item.descripcion}</small>
-								</li>
-							))}
-						</ul>
-						{/* Estado oculto, siempre 'pending' */}
-						<button type="submit" className="button-primary">Agregar Pedido</button>
-					</form>
+								) : (
+									<ul>
+										{items.map(item => (
+											<li key={item.productId}>
+												<strong>{item.name}</strong> - Cantidad: {item.quantity} - Precio: ${item.price}
+												<small>{item.descripcion}</small>
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+
+							<div className="form-actions">
+								<button type="submit" className="button-primary">Crear Pedido</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			);
 }

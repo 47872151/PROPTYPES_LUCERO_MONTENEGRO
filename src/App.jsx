@@ -8,23 +8,21 @@ import DetallePedido from './pages/DetallePedido';
 
 export default function App() {
   return (
-    <>
-      <div className="page-layout">
-        <PedidosProvider>
-          <BrowserRouter>
-            <Navbar />
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/NuevoPedido" element={<NuevoPedido />} />
-                <Route path="/pedidos/:id" element={<DetallePedido />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </main>
-          </BrowserRouter>
-        </PedidosProvider>
-      </div>
-      <Footer />
-    </>
+    <PedidosProvider>
+      <BrowserRouter>
+        <div className="page-layout">
+          <Navbar />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/NuevoPedido" element={<NuevoPedido />} />
+              <Route path="/pedidos/:id" element={<DetallePedido />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </PedidosProvider>
   )
 }

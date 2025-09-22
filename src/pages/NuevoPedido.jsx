@@ -1,5 +1,6 @@
 import Form from '../components/Form';
 import { usePedidos } from '../context/PedidosContext';
+import '../css/styles.css';
 
 function NuevoPedido() {
 	const { addPedido } = usePedidos();

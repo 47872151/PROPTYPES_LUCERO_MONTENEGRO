@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import pedidosData from '../data/pedidos';
 import OrderItem from '../components/OrderItem';
+import '../css/styles.css';
 
 function DetallePedido() {
 	const { id } = useParams();
