@@ -27,9 +27,11 @@ function DetallePedido() {
 	};
 
 	return (
+		<div className="home-container">
 		<div className="container">
 			<h2 className="titulo-seccion">Detalle del Pedido</h2>
 			<OrderItem {...pedido} />
+		</div>
 		</div>
 	);
 }
